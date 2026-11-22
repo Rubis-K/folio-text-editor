@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1795342800000,
+      "tag": "0000_documents",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1795362500000,
+      "tag": "0001_file_organization",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1795365300000,
+      "tag": "0002_editing_and_trash",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1795369000000,
+      "tag": "0003_collaboration",
+      "breakpoints": true
+    }
+  ]
+}

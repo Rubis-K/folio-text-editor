@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172530">
+  <title>Folio · Workspace</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" class="glyphs" aria-hidden="true">
+    <symbol id="i-brand" viewBox="0 0 24 24"><path d="M4 5h7a4 4 0 0 1 4 4v11a4 4 0 0 0-4-4H4zM15 10a4 4 0 0 1 4-4h1v10h-1a4 4 0 0 0-4 4"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4m-4 4 4-4 4 4M4 15v5h16v-5"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><path d="M15.5 20v-2a4 4 0 0 0-4-4h-5a4 4 0 0 0-4 4v2m18 0v-2a4 4 0 0 0-3-3.87M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-7a3.5 3.5 0 0 1 0 7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-bullets" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.1M4 12h.1M4 18h.1"/></symbol>
+    <symbol id="i-numbers" viewBox="0 0 24 24"><path d="M10 6h10m-10 6h10m-10 6h10M4 4h1v5m-1 0h2m-2 5c2-2 4 0 1 3l-1 1h3"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-switch" viewBox="0 0 24 24"><path d="M5 8h14m-4-4 4 4-4 4m4 4H5m4-4-4 4 4 4"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M7 6l1 15h8l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><path d="M6 10h12v11H6zm3 0V7a3 3 0 0 1 6 0v3"/></symbol>
+  </svg>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Workspace documents">
+      <div class="brand"><span class="brand-mark"><svg><use href="#i-brand"/></svg></span> Folio</div>
+      <div class="sidebar-actions">
+        <button type="button" class="primary new-doc" id="create" disabled><svg><use href="#i-plus"/></svg> New document</button>
+        <button type="button" class="import-button" id="import" aria-describedby="upload-types" disabled><svg><use href="#i-upload"/></svg> Upload file</button>
+        <small id="upload-types">TXT, PDF, DOCX, PNG, JPG</small>
+        <input type="file" id="file" accept=".txt,.pdf,.docx,.png,.jpg,.jpeg" hidden>
+      </div>
+      <nav class="document-nav" aria-label="Documents">
+        <section aria-labelledby="owned-heading">
+          <h2 id="owned-heading">YOUR DOCUMENTS <span id="owned-count"></span></h2>
+          <ul id="owned"></ul>
+        </section>
+        <section aria-labelledby="shared-heading">
+          <h2 id="shared-heading">SHARED WITH YOU <span id="shared-count"></span></h2>
+          <ul id="shared"></ul>
+        </section>
+        <details class="trash-nav" id="trash-nav">
+          <summary><svg><use href="#i-trash"/></svg> Trash <span id="trash-count"></span></summary>
+          <ul id="trash"></ul>
+        </details>
+      </nav>
+      <div class="profile">
+        <span class="avatar" id="avatar">··</span>
+        <div><strong id="profile-name">Demo workspace</strong><small id="profile-label">Loading account</small></div>
+        <button type="button" class="switch-button" id="switch" aria-label="Switch demo account" title="Switch demo account" hidden><svg><use href="#i-switch"/></svg></button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu icon-button" id="menu" aria-label="Toggle documents" aria-expanded="false"><svg><use href="#i-menu"/></svg></button>
+        <div class="breadcrumb"><span class="breadcrumb-icon"><svg><use href="#i-file"/></svg></span><span>Workspace</span><span class="crumb-slash">/</span><strong id="crumb">Documents</strong></div>
+        <div class="header-actions" id="header-actions" hidden>
+          <span class="status" id="status" role="status"></span>
+          <div class="presence" id="presence" aria-live="polite" hidden></div>
+          <button class="secondary save" id="save" type="button">Save</button>
+          <details class="export-menu" id="export-menu">
+            <summary class="secondary">Export <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+            <div class="export-options">
+              <button type="button" data-export="pdf">PDF (.pdf)</button>
+              <button type="button" data-export="txt">Plain text (.txt)</button>
+              <button type="button" data-export="doc">Word (.doc)</button>
+            </div>
+          </details>
+          <button class="secondary trash-button" id="delete" type="button"><svg aria-hidden="true"><use href="#i-trash"/></svg><span>Move to Trash</span></button>
+          <button class="primary share" id="share" type="button"><svg><use href="#i-people"/></svg> Share</button>
+        </div>
+      </header>
+      <div id="notice" class="notice" role="alert" hidden>
+        <span id="notice-text"></span>
+        <button id="reload" type="button" hidden>Reload document</button>
+        <button class="icon-button" id="dismiss" type="button" aria-label="Dismiss message"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <div class="workspace" id="workspace" hidden>
+        <div class="document-header" id="document-header">
+          <div class="document-badge" id="document-badge"><svg><use href="#i-file"/></svg></div>
+          <div class="document-heading">
+            <input id="title" aria-label="Document title" maxlength="100" autocomplete="off" spellcheck="false">
+            <div class="document-meta"><p id="doc-meta"></p><span id="sharing-badge" class="sharing-badge" hidden></span></div>
+          </div>
+          <div class="document-tools" id="document-tools">
+            <button type="button" class="secondary" id="comments">Comments</button>
+            <button type="button" class="secondary" id="versions">History</button>
+          </div>
+          <button type="button" class="secondary" id="organize"><svg><use href="#i-folder"/></svg> Move to folder</button>
+          <button type="button" class="secondary" id="restore" hidden>Restore</button>
+          <button type="button" class="danger" id="purge" hidden>Delete permanently</button>
+        </div>
+        <div class="editor-frame">
+          <div class="file-card" id="file-card" hidden></div>
+          <div class="toolbar" id="toolbar" role="group" aria-label="Document formatting">
+            <label class="format-select">
+              <select id="format" aria-label="Paragraph style">
+                <option value="p">Normal text</option><option value="h1">Heading 1</option><option value="h2">Heading 2</option><option value="h3">Heading 3</option>
+              </select>
+              <svg><use href="#i-chevron"/></svg>
+            </label>
+            <label class="format-select text-size">
+              <select id="text-size" aria-label="Text size">
+                <option value="1">10 px</option><option value="2">13 px</option><option value="3" selected>16 px</option><option value="4">18 px</option><option value="5">24 px</option><option value="6">32 px</option><option value="7">48 px</option>
+              </select>
+              <svg><use href="#i-chevron"/></svg>
+            </label>
+            <div class="toolbar-group">
+              <button type="button" data-command="bold" aria-label="Bold" aria-pressed="false" title="Bold (Ctrl or ⌘ + B)"><b>B</b></button>
+              <button type="button" data-command="italic" aria-label="Italic" aria-pressed="false" title="Italic (Ctrl or ⌘ + I)"><i>I</i></button>
+              <button type="button" data-command="underline" aria-label="Underline" aria-pressed="false" title="Underline (Ctrl or ⌘ + U)"><u>U</u></button>
+            </div>
+            <div class="toolbar-group">
+              <button type="button" data-command="insertUnorderedList" aria-label="Bulleted list" aria-pressed="false" title="Bulleted list"><svg><use href="#i-bullets"/></svg></button>
+              <button type="button" data-command="insertOrderedList" aria-label="Numbered list" aria-pressed="false" title="Numbered list"><svg><use href="#i-numbers"/></svg></button>
+            </div>
+          </div>
+          <div class="viewer-bar" id="viewer-bar" hidden><svg><use href="#i-lock"/></svg> View only</div>
+          <article id="editor" class="editor" contenteditable="false" aria-label="Document editor" spellcheck="true"></article>
+          <footer class="editor-footer" id="editor-footer"><span id="word-count"></span><span id="owner-label"></span></footer>
+        </div>
+      </div>
+      <div id="empty" class="empty">
+        <span class="document-badge"><svg><use href="#i-file"/></svg></span>
+        <h1 id="empty-title">Opening your workspace…</h1>
+        <p id="empty-description"></p>
+        <button id="retry" type="button" class="secondary" hidden>Try again</button>
+      </div>
+    </main>
+  </div>
+  <dialog id="share-dialog" aria-labelledby="share-heading">
+    <div class="dialog-header"><div><h2 id="share-heading">Share document</h2><p id="share-title"></p></div><button type="button" class="icon-button" id="close-share" aria-label="Close sharing"><svg><use href="#i-close"/></svg></button></div>
+    <div class="dialog-body">
+      <p>Choose what the other demo account can do.</p>
+      <div class="recipient"><span class="avatar" id="recipient-avatar"></span><div><strong id="recipient-name"></strong><small id="recipient-status"></small></div></div>
+      <div class="recipient-actions">
+        <select id="access-role" aria-label="Recipient access"><option value="viewer">View only</option><option value="editor">Can edit</option></select>
+        <button type="button" id="grant" class="primary">Grant access</button>
+        <button type="button" id="revoke" class="secondary" hidden>Remove access</button>
+      </div>
+      <div class="link-settings">
+        <div><strong>Anyone with the link</strong><small id="link-status">Link disabled</small></div>
+        <button type="button" id="toggle-link" class="secondary">Create link</button>
+      </div>
+      <p id="share-error" role="alert" class="dialog-error" hidden></p>
+      <input id="share-link" aria-label="Share link" readonly hidden>
+    </div>
+    <div class="dialog-footer"><button id="copy" type="button" class="secondary" hidden>Copy link</button><button id="done" type="button" class="primary">Done</button></div>
+  </dialog>
+  <dialog id="organize-dialog" aria-labelledby="organize-heading">
+    <div class="dialog-header"><div><h2 id="organize-heading">Move to folder</h2><p id="organize-title"></p></div><form method="dialog"><button type="submit" class="icon-button" aria-label="Close move dialog"><svg><use href="#i-close"/></svg></button></form></div>
+    <form id="move-form">
+      <div class="dialog-body move-fields">
+        <label>Destination folder<select id="destination" aria-label="Destination folder"></select></label>
+        <label>New folder name <span>optional</span><input id="new-folder" maxlength="50" autocomplete="off" placeholder="Enter a folder name"></label>
+      </div>
+      <div class="dialog-footer"><button type="submit" class="primary">Move</button></div>
+    </form>
+  </dialog>
+  <dialog id="comments-dialog" class="collaboration-dialog" aria-labelledby="comments-heading">
+    <div class="dialog-header"><h2 id="comments-heading">Comments</h2><form method="dialog"><button type="submit" class="icon-button" aria-label="Close comments"><svg><use href="#i-close"/></svg></button></form></div>
+    <div class="dialog-body">
+      <p id="comments-status" role="status"></p>
+      <ol id="comment-list" class="comment-list"></ol>
+      <form id="comment-form">
+        <label for="comment-body">Add a comment</label>
+        <textarea id="comment-body" maxlength="1000" rows="3" required></textarea>
+        <button type="submit" class="primary" id="post-comment">Post comment</button>
+      </form>
+    </div>
+  </dialog>
+  <dialog id="versions-dialog" class="collaboration-dialog" aria-labelledby="versions-heading">
+    <div class="dialog-header"><h2 id="versions-heading">Version history</h2><form method="dialog"><button type="submit" class="icon-button" aria-label="Close version history"><svg><use href="#i-close"/></svg></button></form></div>
+    <div class="dialog-body">
+      <p id="versions-status" role="status"></p>
+      <label for="version-select">Saved versions</label>
+      <select id="version-select"></select>
+      <h3 id="version-title"></h3>
+      <article id="version-preview" class="editor"></article>
+    </div>
+    <div class="dialog-footer"><button type="button" class="primary" id="restore-version" hidden>Restore this version</button></div>
+  </dialog>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-heading" aria-describedby="confirm-message">
+    <form method="dialog">
+      <div class="dialog-header"><h2 id="confirm-heading"></h2></div>
+      <div class="dialog-body"><p id="confirm-message"></p></div>
+      <div class="dialog-footer">
+        <button class="secondary" value="cancel" autofocus>Cancel</button>
+        <button class="danger" id="confirm-action" value="confirm"></button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

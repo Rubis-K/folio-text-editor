@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shared item · Folio</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/shared.js"></script>
+</head>
+<body>
+  <header class="topbar shared-topbar"><strong>Folio</strong><span>Shared item</span></header>
+  <main class="workspace shared-workspace">
+    <p id="shared-message" role="status">Opening shared item…</p>
+    <section id="shared-document" hidden>
+      <div class="shared-heading">
+        <h1 id="shared-title"></h1>
+        <p id="shared-owner"></p>
+      </div>
+      <div class="editor-frame">
+        <div class="viewer-bar">View only</div>
+        <article class="editor" id="shared-body"></article>
+        <div class="file-card" id="shared-file" hidden></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
